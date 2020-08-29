@@ -13,7 +13,7 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Internet_Status_Monitor {
+namespace Network_Status_Monitor {
     public partial class mainFrm : Form {
         private TimeSpan activeTime = new TimeSpan();
         private TimeSpan durationTime = new TimeSpan();
@@ -35,11 +35,10 @@ namespace Internet_Status_Monitor {
                 // Finds the selected NIC and compares it's `OperationalStatus`
                 if (adapter.Description == nicBox.Text) {
                     if (adapter.OperationalStatus == OperationalStatus.Up) {
-                        MessageBox.Show("Information: The selected network interface is online!", "Internet Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Information: The selected network interface is online!", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     } else {
-                        MessageBox.Show("Warning: The selected network interface is not currently online, it may not work properly.", "Internet Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Warning: The selected network interface is not currently online, you may not get accurate results.", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-
                 }
             }
         }
@@ -113,13 +112,13 @@ namespace Internet_Status_Monitor {
             if (!foundNic) {
                 monitorBtn.PerformClick();
                 loadNetworks();
-                MessageBox.Show("Error: Could not find the selected network interface, automatically refreshing list.", "Internet Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: Could not find the selected network interface, automatically refreshing list.", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void monitorBtn_Click(object sender, EventArgs e) {
             if (monitoring) {
-                this.Text = "Internet Status Monitor [Inactive]";
+                this.Text = "Network Status Monitor [Inactive]";
                 monitorBtn.Text = "Start Monitoring";
                 justStarted = false;
                 monitoring = false;
@@ -141,16 +140,20 @@ namespace Internet_Status_Monitor {
                 activeTime = activeTime.Subtract(TimeSpan.FromMilliseconds(activeTime.TotalMilliseconds));
                 durationTime = durationTime.Subtract(TimeSpan.FromMilliseconds(durationTime.TotalMilliseconds));
             } else {
-                this.Text = "Internet Status Monitor [Active: 00:00:00]";
-                monitorBtn.Text = "Stop Monitoring";
-                justStarted = true;
-                monitoring = true;
-                // Starts all monitoring timers and disables the necessary buttons and boxes
-                watchTmr.Start();
-                monitorTmr.Start();
-                nicBox.Enabled = false;
-                checkBtn.Enabled = false;
-                clearBtn.Enabled = false;
+                if (string.IsNullOrEmpty(nicBox.Text)) {
+                    MessageBox.Show("Warning: Please select the current network card you're using to get accurate results.", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                } else {
+                    this.Text = "Network Status Monitor [Active: 00:00:00]";
+                    monitorBtn.Text = "Stop Monitoring";
+                    justStarted = true;
+                    monitoring = true;
+                    // Starts all monitoring timers and disables the necessary buttons and boxes
+                    watchTmr.Start();
+                    monitorTmr.Start();
+                    nicBox.Enabled = false;
+                    checkBtn.Enabled = false;
+                    clearBtn.Enabled = false;
+                }
             }
         }
 
@@ -187,11 +190,11 @@ namespace Internet_Status_Monitor {
             }
         }
 
-        // Separate timer from `monitorTmr` to manager both TimeSpans and upate the form text/title
+        // Separate timer from `monitorTmr` to manager both TimeSpans and upate the forms text/title
         private void watchTmr_Tick(object sender, EventArgs e) {
             activeTime = activeTime.Add(TimeSpan.FromMilliseconds(100));
             durationTime = durationTime.Add(TimeSpan.FromMilliseconds(100));
-            this.Text = "Internet Status Monitor [Active: " + string.Format("{0:00}:{1:00}:{2:00}", activeTime.Hours, activeTime.Minutes, activeTime.Seconds) + "]";
+            this.Text = "Network Status Monitor [Active: " + string.Format("{0:00}:{1:00}:{2:00}", activeTime.Hours, activeTime.Minutes, activeTime.Seconds) + "]";
         }
 
         private void monitorTmr_Tick(object sender, EventArgs e) {

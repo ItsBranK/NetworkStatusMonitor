@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Internet_Status_Monitor {
+namespace Network_Status_Monitor {
     static class Program {
         [STAThread]
         static void Main() {

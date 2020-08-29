@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Internet Status Monitor")]
+[assembly: AssemblyTitle("Network Status Monitor")]
 [assembly: AssemblyDescription("Monitor & log connects/disconnects from your network")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://github.com/ItsBranK/")]
-[assembly: AssemblyProduct("Internet Status Monitor")]
+[assembly: AssemblyProduct("Network Status Monitor")]
 [assembly: AssemblyCopyright("Copyright © ItsBranK 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

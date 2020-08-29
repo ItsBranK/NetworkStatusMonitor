@@ -1,7 +1,5 @@
-﻿namespace Internet_Status_Monitor
-{
-    partial class mainFrm
-    {
+﻿namespace Network_Status_Monitor {
+    partial class mainFrm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -180,7 +178,7 @@
             this.MaximizeBox = false;
             this.Name = "mainFrm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Internet Status Monitor [Inactive]";
+            this.Text = "Network Status Monitor [Inactive]";
             this.Load += new System.EventHandler(this.mainFrm_Load);
             this.ResumeLayout(false);
 
