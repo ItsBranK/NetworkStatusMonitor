@@ -187,7 +187,7 @@ namespace Internet_Status_Monitor {
             }
         }
 
-        // Separate timer from `monitorTmr` to manager both TimeSpan's and upate `timeLbl` 
+        // Separate timer from `monitorTmr` to manager both TimeSpans and upate the form text/title
         private void watchTmr_Tick(object sender, EventArgs e) {
             activeTime = activeTime.Add(TimeSpan.FromMilliseconds(100));
             durationTime = durationTime.Add(TimeSpan.FromMilliseconds(100));
