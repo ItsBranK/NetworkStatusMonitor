@@ -72,7 +72,7 @@ namespace Network_Status_Monitor {
                     Match wirelessMatch = wirelessEx.Match(connectionType);
                     Match ethernetMatch = ethernetEx.Match(connectionType);
 
-                    // This just "pretty prints" the connection type, as it `NetworkInterfaceType` doesn't always return a "simple" answer
+                    // This just "pretty prints" the connection type, as `NetworkInterfaceType` doesn't always return a "simple" answer
                     // If no match is found, it will default to the provided "non pretty" `NetworkInterfaceType`
                     if (wirelessMatch.Success) {
                         connectionType = "WiFi/Wireless";
