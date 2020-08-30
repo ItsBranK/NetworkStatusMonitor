@@ -29,40 +29,36 @@ namespace Network_Status_Monitor {
             loadNetworks();
         }
 
+        // Finds the selected adapter and displays its `OperationalStatus`
         private void checkBtn_Click(object sender, EventArgs e) {
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in nics) {
-                // Finds the selected NIC and compares it's `OperationalStatus`
-                if (adapter.Description == nicBox.Text) {
-                    if (adapter.OperationalStatus == OperationalStatus.Up) {
-                        MessageBox.Show("Information: The selected network interface is online!", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    } else {
-                        MessageBox.Show("Warning: The selected network interface is not currently online, you may not get accurate results.", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                if (adapter.Description == adapterBox.Text) {
+                    MessageBox.Show("The selected network adapters status is: \"" + adapter.OperationalStatus.ToString() + "\"", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        // Gets all the available NIC's and adds their `Description` to `nicBox`
+        // Gets all the available adapters and adds their `Description` to `nicBox`
         public void loadNetworks() {
-            nicBox.Items.Clear();
+            adapterBox.Items.Clear();
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in nics)
-                nicBox.Items.Add(adapter.Description);
+                adapterBox.Items.Add(adapter.Description);
         }
 
         public void log(bool status) {
             bool foundNic = false;
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface adapter in nics) {
-                // Finds the selected NIC based on its `Description`
-                if (adapter.Description == nicBox.Text) {
+                // Finds the selected adapter based on its `Description`
+                if (adapter.Description == adapterBox.Text) {
                     int totalItems = logList.Items.Count;
                     string connectionType = adapter.NetworkInterfaceType.ToString();
                     string currentStatus = "(null)";
 
                     if (totalItems > 0) {
-                        if (!justStarted && logList.Items[totalItems - 1].SubItems[3].Text == "Pending") {
+                        if (!justStarted && logList.Items[totalItems - 1].SubItems[3].Text == "[Pending]") {
                             logList.Items[totalItems - 1].SubItems[3].Text = string.Format("{0:00}:{1:00}:{2:00}", durationTime.Hours, durationTime.Minutes, durationTime.Seconds);
                             durationTime = durationTime.Subtract(TimeSpan.FromMilliseconds(durationTime.TotalMilliseconds));
                         }
@@ -96,11 +92,12 @@ namespace Network_Status_Monitor {
                         }
                     }
 
+                    // Adds the new log to `logList`
                     ListViewItem item = new ListViewItem();
                     item.Text = connectionType;
                     item.SubItems.Add(currentStatus);
                     item.SubItems.Add(DateTime.Now.ToString("MM/dd/yyyy h:mm tt"));
-                    item.SubItems.Add("Pending");
+                    item.SubItems.Add("[Pending]");
                     logList.Items.Add(item);
                     foundNic = true;
                     // We've already found the selected NIC so theres no need to continue the loop
@@ -108,7 +105,7 @@ namespace Network_Status_Monitor {
                 }
             }
 
-            // If for some reason the NIC was removed or not found, cancel monitoring and refresh the list (most likely the user didn't select a NIC in the first place)
+            // If for some reason the adapter was removed or not found, cancel monitoring and refresh the list
             if (!foundNic) {
                 monitorBtn.PerformClick();
                 loadNetworks();
@@ -125,14 +122,14 @@ namespace Network_Status_Monitor {
                 // Stops all monitoring timers and re-enables all buttons and boxes
                 monitorTmr.Stop();
                 watchTmr.Stop();
-                nicBox.Enabled = true;
+                adapterBox.Enabled = true;
                 checkBtn.Enabled = true;
                 clearBtn.Enabled = true;
 
                 // If the last status was still pending, change its text from "Pending" to "Aborted" plus the last reported `durationTime`
                 int totalItems = logList.Items.Count;
                 if (totalItems > 0) {
-                    if (logList.Items[totalItems - 1].SubItems[3].Text == "Pending")
+                    if (logList.Items[totalItems - 1].SubItems[3].Text.Contains("[Pending]"))
                         logList.Items[totalItems - 1].SubItems[3].Text = "[Aborted] " + string.Format("{0:00}:{1:00}:{2:00}", durationTime.Hours, durationTime.Minutes, durationTime.Seconds); ;
                 }
 
@@ -140,8 +137,8 @@ namespace Network_Status_Monitor {
                 activeTime = activeTime.Subtract(TimeSpan.FromMilliseconds(activeTime.TotalMilliseconds));
                 durationTime = durationTime.Subtract(TimeSpan.FromMilliseconds(durationTime.TotalMilliseconds));
             } else {
-                if (string.IsNullOrEmpty(nicBox.Text)) {
-                    MessageBox.Show("Warning: Please select the current network card you're using to get accurate results.", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (string.IsNullOrEmpty(adapterBox.Text)) {
+                    MessageBox.Show("Warning: Please select the current network adapter you're using to get accurate results.", "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 } else {
                     this.Text = "Network Status Monitor [Active: 00:00:00]";
                     monitorBtn.Text = "Stop Monitoring";
@@ -150,7 +147,7 @@ namespace Network_Status_Monitor {
                     // Starts all monitoring timers and disables the necessary buttons and boxes
                     watchTmr.Start();
                     monitorTmr.Start();
-                    nicBox.Enabled = false;
+                    adapterBox.Enabled = false;
                     checkBtn.Enabled = false;
                     clearBtn.Enabled = false;
                 }
@@ -176,25 +173,40 @@ namespace Network_Status_Monitor {
                     saveData += connectionType + ", " + status + ", " + time + ", " + duration + "\n";
                 }
 
+                // Formats the file name for windows
                 string fileName = "LOG " + DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
                 fileName = fileName.Replace("/", "");
                 fileName = fileName.Replace(":", "");
                 fileName = fileName.Replace(" ", "_");
 
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\";
-                using (StreamWriter sw = File.CreateText(desktopPath + fileName + ".txt")) {
-                    sw.WriteLine(saveData);
-                }
+                // Promps the folder picker dialog
+                FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+                DialogResult folderResult = folderBrowser.ShowDialog();
 
-                MessageBox.Show("Sucessfully saved log to: \"" + desktopPath + fileName + ".txt\"");
+                // Makes sure the selected path is valid before creating a file and writing to it
+                if (folderResult == DialogResult.OK && Directory.Exists(folderBrowser.SelectedPath)) {
+
+                    string logPath = folderBrowser.SelectedPath + "\\" + fileName + ".txt";
+                    using (StreamWriter sw = File.CreateText(logPath))
+                        sw.WriteLine(saveData);
+
+                    MessageBox.Show("Sucessfully saved log to: \n" + logPath, "Network Status Monitor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
-        // Separate timer from `monitorTmr` to manager both TimeSpans and upate the forms text/title
+        // Separate timer from `monitorTmr` to manager both TimeSpans and upate the forms text/title, as well as update the active duration in `logList`
         private void watchTmr_Tick(object sender, EventArgs e) {
             activeTime = activeTime.Add(TimeSpan.FromMilliseconds(100));
             durationTime = durationTime.Add(TimeSpan.FromMilliseconds(100));
             this.Text = "Network Status Monitor [Active: " + string.Format("{0:00}:{1:00}:{2:00}", activeTime.Hours, activeTime.Minutes, activeTime.Seconds) + "]";
+
+            int totalItems = logList.Items.Count;
+            if (totalItems > 0) {
+                if (!justStarted && logList.Items[totalItems - 1].SubItems[3].Text.Contains("[Pending]")) {
+                    logList.Items[totalItems - 1].SubItems[3].Text = "[Pending] " + string.Format("{0:00}:{1:00}:{2:00}", durationTime.Hours, durationTime.Minutes, durationTime.Seconds);
+                }
+            }
         }
 
         private void monitorTmr_Tick(object sender, EventArgs e) {

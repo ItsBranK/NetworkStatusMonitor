@@ -37,8 +37,8 @@
             this.saveBtn = new System.Windows.Forms.Button();
             this.clearBtn = new System.Windows.Forms.Button();
             this.watchTmr = new System.Windows.Forms.Timer(this.components);
-            this.nicLbl = new System.Windows.Forms.Label();
-            this.nicBox = new System.Windows.Forms.ComboBox();
+            this.adapterLbl = new System.Windows.Forms.Label();
+            this.adapterBox = new System.Windows.Forms.ComboBox();
             this.checkBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -52,7 +52,7 @@
             this.monitorBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.monitorBtn.Location = new System.Drawing.Point(12, 246);
             this.monitorBtn.Name = "monitorBtn";
-            this.monitorBtn.Size = new System.Drawing.Size(160, 30);
+            this.monitorBtn.Size = new System.Drawing.Size(175, 30);
             this.monitorBtn.TabIndex = 0;
             this.monitorBtn.Text = "Start Monitoring";
             this.monitorBtn.UseVisualStyleBackColor = true;
@@ -75,7 +75,7 @@
             this.logList.Location = new System.Drawing.Point(12, 40);
             this.logList.MultiSelect = false;
             this.logList.Name = "logList";
-            this.logList.Size = new System.Drawing.Size(490, 200);
+            this.logList.Size = new System.Drawing.Size(536, 200);
             this.logList.TabIndex = 18;
             this.logList.UseCompatibleStateImageBehavior = false;
             this.logList.View = System.Windows.Forms.View.Details;
@@ -93,19 +93,19 @@
             // timeColumn
             // 
             this.timeColumn.Text = "Time";
-            this.timeColumn.Width = 121;
+            this.timeColumn.Width = 140;
             // 
             // durationColumn
             // 
             this.durationColumn.Text = "Duration";
-            this.durationColumn.Width = 112;
+            this.durationColumn.Width = 138;
             // 
             // saveBtn
             // 
             this.saveBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveBtn.Location = new System.Drawing.Point(177, 246);
+            this.saveBtn.Location = new System.Drawing.Point(193, 246);
             this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(160, 30);
+            this.saveBtn.Size = new System.Drawing.Size(175, 30);
             this.saveBtn.TabIndex = 28;
             this.saveBtn.Text = "Save log";
             this.saveBtn.UseVisualStyleBackColor = true;
@@ -114,9 +114,9 @@
             // clearBtn
             // 
             this.clearBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearBtn.Location = new System.Drawing.Point(342, 246);
+            this.clearBtn.Location = new System.Drawing.Point(373, 246);
             this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(160, 30);
+            this.clearBtn.Size = new System.Drawing.Size(175, 30);
             this.clearBtn.TabIndex = 29;
             this.clearBtn.Text = "Clear log";
             this.clearBtn.UseVisualStyleBackColor = true;
@@ -126,38 +126,38 @@
             // 
             this.watchTmr.Tick += new System.EventHandler(this.watchTmr_Tick);
             // 
-            // nicLbl
+            // adapterLbl
             // 
-            this.nicLbl.BackColor = System.Drawing.Color.Transparent;
-            this.nicLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nicLbl.ForeColor = System.Drawing.Color.Black;
-            this.nicLbl.Location = new System.Drawing.Point(12, 9);
-            this.nicLbl.Name = "nicLbl";
-            this.nicLbl.Size = new System.Drawing.Size(110, 25);
-            this.nicLbl.TabIndex = 30;
-            this.nicLbl.Text = "Network Interface:";
-            this.nicLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.adapterLbl.BackColor = System.Drawing.Color.Transparent;
+            this.adapterLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.adapterLbl.ForeColor = System.Drawing.Color.Black;
+            this.adapterLbl.Location = new System.Drawing.Point(12, 9);
+            this.adapterLbl.Name = "adapterLbl";
+            this.adapterLbl.Size = new System.Drawing.Size(110, 25);
+            this.adapterLbl.TabIndex = 30;
+            this.adapterLbl.Text = "Network Adapter:";
+            this.adapterLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // nicBox
+            // adapterBox
             // 
-            this.nicBox.BackColor = System.Drawing.Color.White;
-            this.nicBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.nicBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nicBox.ForeColor = System.Drawing.Color.Black;
-            this.nicBox.FormattingEnabled = true;
-            this.nicBox.Location = new System.Drawing.Point(128, 10);
-            this.nicBox.Name = "nicBox";
-            this.nicBox.Size = new System.Drawing.Size(293, 23);
-            this.nicBox.TabIndex = 31;
+            this.adapterBox.BackColor = System.Drawing.Color.White;
+            this.adapterBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.adapterBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.adapterBox.ForeColor = System.Drawing.Color.Black;
+            this.adapterBox.FormattingEnabled = true;
+            this.adapterBox.Location = new System.Drawing.Point(128, 10);
+            this.adapterBox.Name = "adapterBox";
+            this.adapterBox.Size = new System.Drawing.Size(319, 23);
+            this.adapterBox.TabIndex = 31;
             // 
             // checkBtn
             // 
             this.checkBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBtn.Location = new System.Drawing.Point(427, 9);
+            this.checkBtn.Location = new System.Drawing.Point(453, 9);
             this.checkBtn.Name = "checkBtn";
-            this.checkBtn.Size = new System.Drawing.Size(75, 25);
+            this.checkBtn.Size = new System.Drawing.Size(95, 25);
             this.checkBtn.TabIndex = 32;
-            this.checkBtn.Text = "Check";
+            this.checkBtn.Text = "Check Status";
             this.checkBtn.UseVisualStyleBackColor = true;
             this.checkBtn.Click += new System.EventHandler(this.checkBtn_Click);
             // 
@@ -165,12 +165,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 286);
+            this.ClientSize = new System.Drawing.Size(560, 286);
             this.Controls.Add(this.checkBtn);
             this.Controls.Add(this.clearBtn);
             this.Controls.Add(this.saveBtn);
-            this.Controls.Add(this.nicBox);
-            this.Controls.Add(this.nicLbl);
+            this.Controls.Add(this.adapterBox);
+            this.Controls.Add(this.adapterLbl);
             this.Controls.Add(this.logList);
             this.Controls.Add(this.monitorBtn);
             this.ForeColor = System.Drawing.Color.Black;
@@ -196,8 +196,8 @@
         private System.Windows.Forms.Button clearBtn;
         private System.Windows.Forms.ColumnHeader typeColumn;
         private System.Windows.Forms.Timer watchTmr;
-        private System.Windows.Forms.Label nicLbl;
-        private System.Windows.Forms.ComboBox nicBox;
+        private System.Windows.Forms.Label adapterLbl;
+        private System.Windows.Forms.ComboBox adapterBox;
         private System.Windows.Forms.Button checkBtn;
     }
 }
