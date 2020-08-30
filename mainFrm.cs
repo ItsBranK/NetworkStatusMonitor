@@ -72,7 +72,7 @@ namespace Network_Status_Monitor {
                     Match wirelessMatch = wirelessEx.Match(connectionType);
                     Match ethernetMatch = ethernetEx.Match(connectionType);
 
-                    // This just "pretty prints" the connection type, as `NetworkInterfaceType` doesn't always return a "simple" answer
+                    // This just "pretty prints" the connection type, as `NetworkInterfaceType` doesn't always return a simple answer, which is why we also need to use regular expressions
                     // If no match is found, it will default to the provided "non pretty" `NetworkInterfaceType`
                     if (wirelessMatch.Success) {
                         connectionType = "WiFi/Wireless";
@@ -80,7 +80,7 @@ namespace Network_Status_Monitor {
                         connectionType = "Ethernet/Wired";
                     }
 
-                    // If the interface was lost, we need to manually switch the connection type if it's changed.
+                    // If the interface was lost, we need to manually switch the connection type if it was changed
                     // If we don't do this and the user reconnects to a different interface, from lets say ethernet to wifi, it will report the wrong "disconnection type"
                     if (!justStarted && currentStatus == "Disconnected/Offline") {
                         if (logList.Items[totalItems - 1].Text != connectionType) {
@@ -100,7 +100,7 @@ namespace Network_Status_Monitor {
                     item.SubItems.Add("[Pending]");
                     logList.Items.Add(item);
                     foundNic = true;
-                    // We've already found the selected NIC so theres no need to continue the loop
+                    // We've already found the selected adapter so theres no need to continue the loop
                     return;
                 }
             }
@@ -158,13 +158,13 @@ namespace Network_Status_Monitor {
             logList.Items.Clear();
         }
 
-        // Turns all items in `logList` to a string and writes that to a new file on the users desktop
         private void saveBtn_Click(object sender, EventArgs e) {
             int totalItems = logList.Items.Count;
             if (totalItems > 0) {
                 string saveData = "";
                 saveData += "Connection Type, Status, Time, Duration\n";
 
+                 // Turns each item in `logList` to a string and adds it to `saveData`, lines are seperated with the "\n" at the end
                 for (int i = 0; i < totalItems; i++) {
                     string connectionType = logList.Items[i].Text;
                     string status = logList.Items[i].SubItems[1].Text;
