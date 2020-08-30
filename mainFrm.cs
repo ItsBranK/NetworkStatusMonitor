@@ -58,7 +58,7 @@ namespace Network_Status_Monitor {
                     string currentStatus = "(null)";
 
                     if (totalItems > 0) {
-                        if (!justStarted && logList.Items[totalItems - 1].SubItems[3].Text == "[Pending]") {
+                        if (!justStarted && logList.Items[totalItems - 1].SubItems[3].Text.Contains("[Pending]")) {
                             logList.Items[totalItems - 1].SubItems[3].Text = string.Format("{0:00}:{1:00}:{2:00}", durationTime.Hours, durationTime.Minutes, durationTime.Seconds);
                             durationTime = durationTime.Subtract(TimeSpan.FromMilliseconds(durationTime.TotalMilliseconds));
                         }
