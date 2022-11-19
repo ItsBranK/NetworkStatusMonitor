@@ -1,12 +1,14 @@
-﻿namespace Network_Status_Monitor {
-    partial class mainFrm {
+﻿namespace NetworkStatusMonitor
+{
+    partial class MainFrm
+    {
         /// <summary>
-        /// Required designer variable.
+        ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        ///  Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -21,184 +23,167 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.monitorTmr = new System.Windows.Forms.Timer(this.components);
-            this.monitorBtn = new System.Windows.Forms.Button();
-            this.logList = new System.Windows.Forms.ListView();
-            this.typeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.statusColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.timeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.durationColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.saveBtn = new System.Windows.Forms.Button();
-            this.clearBtn = new System.Windows.Forms.Button();
-            this.watchTmr = new System.Windows.Forms.Timer(this.components);
-            this.adapterLbl = new System.Windows.Forms.Label();
-            this.adapterBox = new System.Windows.Forms.ComboBox();
-            this.checkBtn = new System.Windows.Forms.Button();
+            this.AdapterLbl = new System.Windows.Forms.Label();
+            this.AdapterBx = new System.Windows.Forms.ComboBox();
+            this.StatusBtn = new System.Windows.Forms.Button();
+            this.LogList = new System.Windows.Forms.ListView();
+            this.TypeColumn = new System.Windows.Forms.ColumnHeader();
+            this.StatusColumn = new System.Windows.Forms.ColumnHeader();
+            this.TimeColumn = new System.Windows.Forms.ColumnHeader();
+            this.DurationColumn = new System.Windows.Forms.ColumnHeader();
+            this.MonitorBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
+            this.ClearBtn = new System.Windows.Forms.Button();
+            this.StatusTmr = new System.Windows.Forms.Timer(this.components);
+            this.DurationTmr = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // monitorTmr
+            // AdapterLbl
             // 
-            this.monitorTmr.Interval = 1000;
-            this.monitorTmr.Tick += new System.EventHandler(this.monitorTmr_Tick);
+            this.AdapterLbl.Location = new System.Drawing.Point(12, 12);
+            this.AdapterLbl.Name = "AdapterLbl";
+            this.AdapterLbl.Size = new System.Drawing.Size(100, 25);
+            this.AdapterLbl.TabIndex = 0;
+            this.AdapterLbl.Text = "Network Adapter:";
+            this.AdapterLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // monitorBtn
+            // AdapterBx
             // 
-            this.monitorBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monitorBtn.Location = new System.Drawing.Point(12, 246);
-            this.monitorBtn.Name = "monitorBtn";
-            this.monitorBtn.Size = new System.Drawing.Size(175, 30);
-            this.monitorBtn.TabIndex = 0;
-            this.monitorBtn.Text = "Start Monitoring";
-            this.monitorBtn.UseVisualStyleBackColor = true;
-            this.monitorBtn.Click += new System.EventHandler(this.monitorBtn_Click);
+            this.AdapterBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AdapterBx.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.AdapterBx.FormattingEnabled = true;
+            this.AdapterBx.Location = new System.Drawing.Point(115, 12);
+            this.AdapterBx.Name = "AdapterBx";
+            this.AdapterBx.Size = new System.Drawing.Size(326, 25);
+            this.AdapterBx.TabIndex = 1;
             // 
-            // logList
+            // StatusBtn
             // 
-            this.logList.BackColor = System.Drawing.Color.White;
-            this.logList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.logList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.typeColumn,
-            this.statusColumn,
-            this.timeColumn,
-            this.durationColumn});
-            this.logList.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logList.ForeColor = System.Drawing.Color.Black;
-            this.logList.FullRowSelect = true;
-            this.logList.GridLines = true;
-            this.logList.HideSelection = false;
-            this.logList.Location = new System.Drawing.Point(12, 40);
-            this.logList.MultiSelect = false;
-            this.logList.Name = "logList";
-            this.logList.Size = new System.Drawing.Size(536, 200);
-            this.logList.TabIndex = 18;
-            this.logList.UseCompatibleStateImageBehavior = false;
-            this.logList.View = System.Windows.Forms.View.Details;
+            this.StatusBtn.Location = new System.Drawing.Point(447, 12);
+            this.StatusBtn.Name = "StatusBtn";
+            this.StatusBtn.Size = new System.Drawing.Size(100, 25);
+            this.StatusBtn.TabIndex = 2;
+            this.StatusBtn.Text = "Check status";
+            this.StatusBtn.UseVisualStyleBackColor = true;
+            this.StatusBtn.Click += new System.EventHandler(this.StatusBtn_Click);
             // 
-            // typeColumn
+            // LogList
             // 
-            this.typeColumn.Text = "Connection Type";
-            this.typeColumn.Width = 120;
+            this.LogList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LogList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.TypeColumn,
+            this.StatusColumn,
+            this.TimeColumn,
+            this.DurationColumn});
+            this.LogList.FullRowSelect = true;
+            this.LogList.GridLines = true;
+            this.LogList.Location = new System.Drawing.Point(12, 43);
+            this.LogList.Name = "LogList";
+            this.LogList.Size = new System.Drawing.Size(535, 215);
+            this.LogList.TabIndex = 3;
+            this.LogList.UseCompatibleStateImageBehavior = false;
+            this.LogList.View = System.Windows.Forms.View.Details;
             // 
-            // statusColumn
+            // TypeColumn
             // 
-            this.statusColumn.Text = "Status";
-            this.statusColumn.Width = 136;
+            this.TypeColumn.Text = "Type";
+            this.TypeColumn.Width = 120;
             // 
-            // timeColumn
+            // StatusColumn
             // 
-            this.timeColumn.Text = "Time";
-            this.timeColumn.Width = 140;
+            this.StatusColumn.Text = "Status";
+            this.StatusColumn.Width = 135;
             // 
-            // durationColumn
+            // TimeColumn
             // 
-            this.durationColumn.Text = "Duration";
-            this.durationColumn.Width = 138;
+            this.TimeColumn.Text = "Time";
+            this.TimeColumn.Width = 135;
             // 
-            // saveBtn
+            // DurationColumn
             // 
-            this.saveBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveBtn.Location = new System.Drawing.Point(193, 246);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(175, 30);
-            this.saveBtn.TabIndex = 28;
-            this.saveBtn.Text = "Save log";
-            this.saveBtn.UseVisualStyleBackColor = true;
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            this.DurationColumn.Text = "Duration";
+            this.DurationColumn.Width = 145;
             // 
-            // clearBtn
+            // MonitorBtn
             // 
-            this.clearBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearBtn.Location = new System.Drawing.Point(373, 246);
-            this.clearBtn.Name = "clearBtn";
-            this.clearBtn.Size = new System.Drawing.Size(175, 30);
-            this.clearBtn.TabIndex = 29;
-            this.clearBtn.Text = "Clear log";
-            this.clearBtn.UseVisualStyleBackColor = true;
-            this.clearBtn.Click += new System.EventHandler(this.clearBtn_Click);
+            this.MonitorBtn.Location = new System.Drawing.Point(12, 264);
+            this.MonitorBtn.Name = "MonitorBtn";
+            this.MonitorBtn.Size = new System.Drawing.Size(200, 30);
+            this.MonitorBtn.TabIndex = 4;
+            this.MonitorBtn.Text = "Start monitoring";
+            this.MonitorBtn.UseVisualStyleBackColor = true;
+            this.MonitorBtn.Click += new System.EventHandler(this.MonitorBtn_Click);
             // 
-            // watchTmr
+            // SaveBtn
             // 
-            this.watchTmr.Tick += new System.EventHandler(this.watchTmr_Tick);
+            this.SaveBtn.Location = new System.Drawing.Point(218, 264);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(200, 30);
+            this.SaveBtn.TabIndex = 5;
+            this.SaveBtn.Text = "Save log";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
-            // adapterLbl
+            // ClearBtn
             // 
-            this.adapterLbl.BackColor = System.Drawing.Color.Transparent;
-            this.adapterLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.adapterLbl.ForeColor = System.Drawing.Color.Black;
-            this.adapterLbl.Location = new System.Drawing.Point(12, 9);
-            this.adapterLbl.Name = "adapterLbl";
-            this.adapterLbl.Size = new System.Drawing.Size(110, 25);
-            this.adapterLbl.TabIndex = 30;
-            this.adapterLbl.Text = "Network Adapter:";
-            this.adapterLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ClearBtn.Location = new System.Drawing.Point(424, 263);
+            this.ClearBtn.Name = "ClearBtn";
+            this.ClearBtn.Size = new System.Drawing.Size(123, 30);
+            this.ClearBtn.TabIndex = 6;
+            this.ClearBtn.Text = "Clear log";
+            this.ClearBtn.UseVisualStyleBackColor = true;
+            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
-            // adapterBox
+            // StatusTmr
             // 
-            this.adapterBox.BackColor = System.Drawing.Color.White;
-            this.adapterBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.adapterBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.adapterBox.ForeColor = System.Drawing.Color.Black;
-            this.adapterBox.FormattingEnabled = true;
-            this.adapterBox.Location = new System.Drawing.Point(128, 10);
-            this.adapterBox.Name = "adapterBox";
-            this.adapterBox.Size = new System.Drawing.Size(319, 23);
-            this.adapterBox.TabIndex = 31;
+            this.StatusTmr.Tick += new System.EventHandler(this.StatusTmr_Tick);
             // 
-            // checkBtn
+            // DurationTmr
             // 
-            this.checkBtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBtn.Location = new System.Drawing.Point(453, 9);
-            this.checkBtn.Name = "checkBtn";
-            this.checkBtn.Size = new System.Drawing.Size(95, 25);
-            this.checkBtn.TabIndex = 32;
-            this.checkBtn.Text = "Check Status";
-            this.checkBtn.UseVisualStyleBackColor = true;
-            this.checkBtn.Click += new System.EventHandler(this.checkBtn_Click);
+            this.DurationTmr.Tick += new System.EventHandler(this.DurationTmr_Tick);
             // 
-            // mainFrm
+            // MainFrm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 286);
-            this.Controls.Add(this.checkBtn);
-            this.Controls.Add(this.clearBtn);
-            this.Controls.Add(this.saveBtn);
-            this.Controls.Add(this.adapterBox);
-            this.Controls.Add(this.adapterLbl);
-            this.Controls.Add(this.logList);
-            this.Controls.Add(this.monitorBtn);
-            this.ForeColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(559, 305);
+            this.Controls.Add(this.ClearBtn);
+            this.Controls.Add(this.SaveBtn);
+            this.Controls.Add(this.MonitorBtn);
+            this.Controls.Add(this.LogList);
+            this.Controls.Add(this.StatusBtn);
+            this.Controls.Add(this.AdapterBx);
+            this.Controls.Add(this.AdapterLbl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "mainFrm";
+            this.Name = "MainFrm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Network Status Monitor [Inactive]";
-            this.Load += new System.EventHandler(this.mainFrm_Load);
+            this.Text = "NetworkStatusMonitor.NET";
+            this.Load += new System.EventHandler(this.MainFrm_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Timer monitorTmr;
-        private System.Windows.Forms.Button monitorBtn;
-        internal System.Windows.Forms.ListView logList;
-        private System.Windows.Forms.ColumnHeader statusColumn;
-        internal System.Windows.Forms.ColumnHeader timeColumn;
-        internal System.Windows.Forms.ColumnHeader durationColumn;
-        private System.Windows.Forms.Button saveBtn;
-        private System.Windows.Forms.Button clearBtn;
-        private System.Windows.Forms.ColumnHeader typeColumn;
-        private System.Windows.Forms.Timer watchTmr;
-        private System.Windows.Forms.Label adapterLbl;
-        private System.Windows.Forms.ComboBox adapterBox;
-        private System.Windows.Forms.Button checkBtn;
+        private Label AdapterLbl;
+        private ComboBox AdapterBx;
+        private Button StatusBtn;
+        private ListView LogList;
+        private ColumnHeader TypeColumn;
+        private ColumnHeader StatusColumn;
+        private ColumnHeader TimeColumn;
+        private ColumnHeader DurationColumn;
+        private Button MonitorBtn;
+        private Button SaveBtn;
+        private Button ClearBtn;
+        private System.Windows.Forms.Timer StatusTmr;
+        private System.Windows.Forms.Timer DurationTmr;
     }
 }
-
