@@ -59,7 +59,6 @@ namespace NetworkStatusMonitor
                         if (!(_CurrentStatus != StatusTypes.Unknown) && LogList.Items[pendingIndex].SubItems[3].Text.Contains("[Pending]"))
                         {
                             LogList.Items[pendingIndex].SubItems[3].Text = string.Format("{0:00}:{1:00}:{2:00}", _DurationTime.Hours, _DurationTime.Minutes, _DurationTime.Seconds);
-                            _DurationTime = new TimeSpan();
                         }
                     }
 
@@ -236,6 +235,7 @@ namespace NetworkStatusMonitor
                 if ( newStatus != _CurrentStatus)
                 {
                     LogStatus(newStatus);
+                    _DurationTime = new TimeSpan();
                 }
             }
         }
@@ -247,7 +247,7 @@ namespace NetworkStatusMonitor
             {
                 _MonitorTime = _MonitorTime.Add(TimeSpan.FromMilliseconds(100));
                 _DurationTime = _DurationTime.Add(TimeSpan.FromMilliseconds(100));
-               // this.Text = "NetworkStatusMonitor.NET [Monitoring: " + string.Format("{0:00}:{1:00}:{2:00}", _MonitorTime.Hours, _MonitorTime.Minutes, _MonitorTime.Seconds) + "]";
+                this.Text = "NetworkStatusMonitor.NET [Monitoring: " + string.Format("{0:00}:{1:00}:{2:00}", _MonitorTime.Hours, _MonitorTime.Minutes, _MonitorTime.Seconds) + "]";
 
                 if ((_CurrentStatus != StatusTypes.Unknown) && (LogList.Items.Count > 0))
                 {
