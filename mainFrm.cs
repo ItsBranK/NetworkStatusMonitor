@@ -70,6 +70,7 @@ namespace NetworkStatusMonitor
 
                     // This just "pretty prints" the connection type, as it "NetworkInterfaceType" doesn't always return a "simple" answer.
                     // If no match is found, it will default to the provided "non pretty" "NetworkInterfaceType".
+
                     if (wirelessMatch.Success)
                     {
                         connectionType = "WiFi/Wireless";
@@ -83,6 +84,7 @@ namespace NetworkStatusMonitor
                     {
                         // If the interface was lost, we need to manually switch the connection type if it's changed.
                         // If we don't do this and the user reconnects to a different interface, from lets say ethernet to wifi, it will report the wrong "disconnection type".
+
                         if ((_CurrentStatus != StatusTypes.Unknown) && (currentStatus == "Disconnected/Offline"))
                         {
                             if (LogList.Items[LogList.Items.Count - 1].Text != connectionType)
@@ -99,7 +101,8 @@ namespace NetworkStatusMonitor
                         }
                     }
 
-                    // Adds the new log to `logList`
+                    // Adds the new log to "logList".
+
                     ListViewItem item = new ListViewItem();
                     item.Text = connectionType;
                     item.SubItems.Add(currentStatus);
@@ -112,6 +115,7 @@ namespace NetworkStatusMonitor
             }
 
             // If for some reason the adapter was removed or not found, cancel monitoring and refresh the adapter list.
+
             if (!foundNic)
             {
                 MonitorBtn.PerformClick();
@@ -185,17 +189,20 @@ namespace NetworkStatusMonitor
                     saveData += (connectionType + ", " + status + ", " + time + ", " + duration + "\n");
                 }
 
-                // Formats the file name for windows
+                // Formats the file name for windows.
+
                 string fileName = ("LOG " + DateTime.Now.ToString("MM/dd/yyyy h:mm tt"));
                 fileName = fileName.Replace("/", "");
                 fileName = fileName.Replace(":", "");
                 fileName = fileName.Replace(" ", "_");
 
-                // Promps the folder picker dialog
+                // Promps the folder picker dialog.
+
                 FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
                 DialogResult folderResult = folderBrowser.ShowDialog();
 
-                // Makes sure the selected path is valid before creating a file and writing to it
+                // Makes sure the selected path is valid before creating a file and writing to it.
+
                 if ((folderResult == DialogResult.OK) && (Directory.Exists(folderBrowser.SelectedPath)))
                 {
                     string logPath = (folderBrowser.SelectedPath + "\\" + fileName + ".txt");
