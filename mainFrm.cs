@@ -13,10 +13,10 @@ namespace NetworkStatusMonitor
             Disconnected
         }
 
-        private TimeSpan _MonitorTime = new TimeSpan(); // How long the user has been monitoring for.
-        private TimeSpan _DurationTime = new TimeSpan(); // Current time of when the current status was changed.
-        private bool _IsMonitoring = false;
-        private StatusTypes _CurrentStatus = StatusTypes.Unknown;
+        private TimeSpan m_monitorTime = new TimeSpan(); // How long the user has been monitoring for.
+        private TimeSpan m_durationTime = new TimeSpan(); // Current time of when the current status was changed.
+        private bool m_isMonitoring = false;
+        private StatusTypes m_currentStatus = StatusTypes.Unknown;
 
         public MainFrm()
         {
@@ -41,7 +41,7 @@ namespace NetworkStatusMonitor
         
         private void LogStatus(StatusTypes newStatus)
         {
-            _CurrentStatus = newStatus;
+            m_currentStatus = newStatus;
             bool foundNic = false;
             NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
 
@@ -56,13 +56,13 @@ namespace NetworkStatusMonitor
                     {
                         Int32 pendingIndex = (LogList.Items.Count - 1);
 
-                        if (!(_CurrentStatus != StatusTypes.Unknown) && LogList.Items[pendingIndex].SubItems[3].Text.Contains("[Pending]"))
+                        if (!(m_currentStatus != StatusTypes.Unknown) && LogList.Items[pendingIndex].SubItems[3].Text.Contains("[Pending]"))
                         {
-                            LogList.Items[pendingIndex].SubItems[3].Text = string.Format("{0:00}:{1:00}:{2:00}", _DurationTime.Hours, _DurationTime.Minutes, _DurationTime.Seconds);
+                            LogList.Items[pendingIndex].SubItems[3].Text = string.Format("{0:00}:{1:00}:{2:00}", m_durationTime.Hours, m_durationTime.Minutes, m_durationTime.Seconds);
                         }
                     }
 
-                    currentStatus = ((_CurrentStatus == StatusTypes.Disconnected) ? "Disconnected/Offline" : "Connected/Online");
+                    currentStatus = ((m_currentStatus == StatusTypes.Disconnected) ? "Disconnected/Offline" : "Connected/Online");
                     Regex wirelessEx = new Regex("(Wireless)");
                     Regex ethernetEx = new Regex("(Ethernet)");
                     Match wirelessMatch = wirelessEx.Match(connectionType);
@@ -79,13 +79,17 @@ namespace NetworkStatusMonitor
                     {
                         connectionType = "Ethernet/Wired";
                     }
+                    else
+                    {
+                        connectionType = "Other";
+                    }
 
                     if (LogList.Items.Count > 0)
                     {
                         // If the interface was lost, we need to manually switch the connection type if it's changed.
                         // If we don't do this and the user reconnects to a different interface, from lets say ethernet to wifi, it will report the wrong "disconnection type".
 
-                        if ((_CurrentStatus != StatusTypes.Unknown) && (currentStatus == "Disconnected/Offline"))
+                        if ((m_currentStatus != StatusTypes.Unknown) && (currentStatus == "Disconnected/Offline"))
                         {
                             if (LogList.Items[LogList.Items.Count - 1].Text != connectionType)
                             {
@@ -93,7 +97,7 @@ namespace NetworkStatusMonitor
                                 {
                                     connectionType = "Ethernet/Wired";
                                 }
-                                else
+                                else if (connectionType != "Other")
                                 {
                                     connectionType = "WiFi/Wireless";
                                 }
@@ -140,30 +144,30 @@ namespace NetworkStatusMonitor
 
         private void MonitorBtn_Click(object sender, EventArgs e)
         {
-            if (_IsMonitoring)
+            if (m_isMonitoring)
             {
                 this.Text = "NetworkStatusMonitor.NET";
                 MonitorBtn.Text = "Start monitoring";
                 StatusTmr.Stop();
                 DurationTmr.Stop();
 
-                _CurrentStatus = StatusTypes.Unknown;
-                _IsMonitoring = !_IsMonitoring;
-                AdapterBx.Enabled = !_IsMonitoring;
-                StatusBtn.Enabled = !_IsMonitoring;
+                m_currentStatus = StatusTypes.Unknown;
+                m_isMonitoring = !m_isMonitoring;
+                AdapterBx.Enabled = !m_isMonitoring;
+                StatusBtn.Enabled = !m_isMonitoring;
 
-                _MonitorTime = new TimeSpan();
-                _DurationTime = new TimeSpan();
+                m_monitorTime = new TimeSpan();
+                m_durationTime = new TimeSpan();
             }
             else if (!String.IsNullOrEmpty(AdapterBx.Text))
             {
                 this.Text = "NetworkStatusMonitor.NET";
                 MonitorBtn.Text = "Stop monitoring";
 
-                _CurrentStatus = StatusTypes.Unknown;
-                _IsMonitoring = !_IsMonitoring;
-                AdapterBx.Enabled = !_IsMonitoring;
-                StatusBtn.Enabled = !_IsMonitoring;
+                m_currentStatus = StatusTypes.Unknown;
+                m_isMonitoring = !m_isMonitoring;
+                AdapterBx.Enabled = !m_isMonitoring;
+                StatusBtn.Enabled = !m_isMonitoring;
 
                 StatusTmr.Start();
                 DurationTmr.Start();
@@ -224,7 +228,7 @@ namespace NetworkStatusMonitor
 
         private void StatusTmr_Tick(object sender, EventArgs e)
         {
-            if (_IsMonitoring)
+            if (m_isMonitoring)
             {
                 StatusTypes newStatus = StatusTypes.Unknown;
                 ConnectionProfile profile = NetworkInformation.GetInternetConnectionProfile();
@@ -239,10 +243,10 @@ namespace NetworkStatusMonitor
                     newStatus = StatusTypes.Disconnected;
                 }
 
-                if ( newStatus != _CurrentStatus)
+                if ( newStatus != m_currentStatus)
                 {
                     LogStatus(newStatus);
-                    _DurationTime = new TimeSpan();
+                    m_durationTime = new TimeSpan();
                 }
             }
         }
@@ -250,19 +254,19 @@ namespace NetworkStatusMonitor
         // Manages both TimeSpans and upate the forms text/title, as well as update the active duration in "LogList".
         private void DurationTmr_Tick(object sender, EventArgs e)
         {
-            if (_IsMonitoring)
+            if (m_isMonitoring)
             {
-                _MonitorTime = _MonitorTime.Add(TimeSpan.FromMilliseconds(100));
-                _DurationTime = _DurationTime.Add(TimeSpan.FromMilliseconds(100));
-                this.Text = "NetworkStatusMonitor.NET [Monitoring: " + string.Format("{0:00}:{1:00}:{2:00}", _MonitorTime.Hours, _MonitorTime.Minutes, _MonitorTime.Seconds) + "]";
+                m_monitorTime = m_monitorTime.Add(TimeSpan.FromMilliseconds(100));
+                m_durationTime = m_durationTime.Add(TimeSpan.FromMilliseconds(100));
+                this.Text = ("NetworkStatusMonitor.NET [Monitoring: " + string.Format("{0:00}:{1:00}:{2:00}", m_monitorTime.Hours, m_monitorTime.Minutes, m_monitorTime.Seconds) + "]");
 
-                if ((_CurrentStatus != StatusTypes.Unknown) && (LogList.Items.Count > 0))
+                if ((m_currentStatus != StatusTypes.Unknown) && (LogList.Items.Count > 0))
                 {
                     Int32 pendingIndex = (LogList.Items.Count - 1);
 
                     if (LogList.Items[pendingIndex].SubItems[3].Text.Contains("[Pending]"))
                     {
-                        LogList.Items[pendingIndex].SubItems[3].Text = "[Pending] " + string.Format("{0:00}:{1:00}:{2:00}", _DurationTime.Hours, _DurationTime.Minutes, _DurationTime.Seconds);
+                        LogList.Items[pendingIndex].SubItems[3].Text = ("[Pending] " + string.Format("{0:00}:{1:00}:{2:00}", m_durationTime.Hours, m_durationTime.Minutes, m_durationTime.Seconds));
                     }
                 }
             }
